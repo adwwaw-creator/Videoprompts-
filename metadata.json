@@ -1,0 +1,6 @@
+{
+  "name": "ArabiPrompt Studio",
+  "description": "استوديو هندسة برومبتات أدوات الذكاء الاصطناعي مفتوحة المصدر (WAN 2.2, HunyuanVideo, LTX-Video, FLUX.1, SDXL) مع تحسين ذكي وتصدير ComfyUI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

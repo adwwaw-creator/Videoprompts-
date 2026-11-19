@@ -1,0 +1,319 @@
+{
+  "entities": {
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator granted read access to visitor analytics.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "SiteVisit": {
+      "title": "SiteVisit",
+      "description": "Privacy-preserving session visit event logged once per browser session.",
+      "type": "object",
+      "properties": {
+        "visitorHash": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "lang": {
+          "type": "string",
+          "enum": ["ar", "fr", "en"]
+        },
+        "path": {
+          "type": "string",
+          "enum": ["portal", "studio", "guide", "history"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["visitorHash", "dateKey", "lang", "path", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private profile document for a registered site user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "displayName", "email", "photoURL", "createdAt", "updatedAt"]
+    },
+    "SavedPrompt": {
+      "title": "SavedPrompt",
+      "description": "User-owned prompt saved to their personal cloud library.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "engine": {
+          "type": "string",
+          "enum": ["wan22", "minimax", "veo", "hunyuan", "ltx", "flux1", "sdxl"]
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["t2v", "i2v", "flf2v", "s2v", "film", "t2i", "img2img"]
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "shotsCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "source": {
+          "type": "string",
+          "enum": ["studio", "generator_v1", "director_v2"]
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "positiveOnly": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "negativeOnly": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "isFavorite": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "title",
+        "engine",
+        "mode",
+        "category",
+        "shotsCount",
+        "source",
+        "prompt",
+        "positiveOnly",
+        "negativeOnly",
+        "isFavorite",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SavedSequence": {
+      "title": "SavedSequence",
+      "description": "User-owned multi-scene film sequence saved to their personal cloud library.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "idea": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "model": {
+          "type": "string",
+          "enum": ["wan", "minimax", "google"]
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["normal", "film", "film_10"]
+        },
+        "style": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "lang": {
+          "type": "string",
+          "enum": ["ar", "en"]
+        },
+        "shotLen": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "scenes": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "type": "object",
+            "properties": {
+              "sceneNumber": {
+                "type": "integer"
+              },
+              "narrativeBeat": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "prompt": {
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": ["sceneNumber", "narrativeBeat", "prompt"]
+          }
+        },
+        "consistencyNotes": {
+          "type": "object",
+          "properties": {
+            "character": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "palette": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "lens": {
+              "type": "string",
+              "maxLength": 1000
+            }
+          },
+          "required": ["character", "palette", "lens"]
+        },
+        "formattedOutput": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40000
+        },
+        "isFavorite": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "title",
+        "idea",
+        "model",
+        "mode",
+        "style",
+        "lang",
+        "shotLen",
+        "scenes",
+        "consistencyNotes",
+        "formattedOutput",
+        "isFavorite",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": {
+        "$ref": "#/entities/AdminUser"
+      },
+      "description": "Verified administrator accounts allowed to inspect site visitor analytics."
+    },
+    "/visits/{visitId}": {
+      "schema": {
+        "$ref": "#/entities/SiteVisit"
+      },
+      "description": "Anonymous session visit records created on arrival and readable only by administrators."
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Private registered user profile documents accessible only by the owner."
+    },
+    "/users/{userId}/prompts/{promptId}": {
+      "schema": {
+        "$ref": "#/entities/SavedPrompt"
+      },
+      "description": "Owner-only cloud library of saved prompts per user."
+    },
+    "/users/{userId}/sequences/{sequenceId}": {
+      "schema": {
+        "$ref": "#/entities/SavedSequence"
+      },
+      "description": "Owner-only cloud library of saved multi-scene film sequences per user."
+    }
+  }
+}
